@@ -1,6 +1,6 @@
 from web3 import Web3
 import time
-ganache_url = "HTTP://127.0.0.1:7545"
+ganache_url = "HTTP://127.0.0.1:7545" #Local port in which Ganache is running or any URL to connect to blockchains
 web3 = Web3(Web3.HTTPProvider(ganache_url))
 #accepts information
 SenderAccount = input("Enter your Account Number: ")
@@ -10,15 +10,15 @@ amount = float(input("Enter the amount to be transferred: "))
 time.sleep(5)
 #transaction
 nonce = web3.eth.getTransactionCount(SenderAccount)
-tx = {
+tx = {                                   #Transaction Details
     'nonce': nonce,
     'to': ReceiverAccount,
     'value': web3.toWei(amount, 'ether'),
     'gas': 200000,
     'gasPrice': web3.toWei(50, 'gwei')
 }
-signed_tx = web3.eth.account.signTransaction(tx, SenderPrivateKey)
-tx_hash = web3.toHex(web3.eth.sendRawTransaction(signed_tx.rawTransaction))
+signed_tx = web3.eth.account.signTransaction(tx, SenderPrivateKey) #Signing the transaction
+tx_hash = web3.toHex(web3.eth.sendRawTransaction(signed_tx.rawTransaction)) #Transaction
 print("succesfully transfered {} ether.\nHash: {}".format(amount, tx_hash))
 
 #block information
